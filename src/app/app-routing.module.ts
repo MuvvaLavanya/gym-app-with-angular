@@ -1,6 +1,5 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import {HomepageComponent} from "./homepage/homepage.component";
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {JoinUsComponent} from "./join-us/join-us.component";
 import {SignInComponent} from "./sign-in/sign-in.component";
 import {InformationComponent} from "./information/information.component";
@@ -16,6 +15,7 @@ import {TraineeTrainersComponent} from "./trainee-trainers/trainee-trainers.comp
 import {AddTrainingComponent} from "./add-training/add-training.component";
 import {TraineeTrainingsLogsComponent} from "./trainee-trainings-logs/trainee-trainings-logs.component";
 import {TrainerTrainingsLogsComponent} from "./trainer-trainings-logs/trainer-trainings-logs.component";
+import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 
 const routes: Routes = [
   // { path:"", component:InformationComponent},
@@ -24,21 +24,22 @@ const routes: Routes = [
     redirectTo: "/home",
     pathMatch: "full"
   },
-  { path: "home", component: InformationComponent},
-  { path: "join-us",component: JoinUsComponent},
-  { path: "signIn",component: SignInComponent},
-  { path: "trainee-signup",component: TraineeRegistrationComponent},
-  { path: "trainer-signup",component: TrainerRegistrationComponent},
-  { path: "trainee-profile",component: TraineeProfileComponent},
-  { path: "trainer-profile",component: TrainerProfileComponent},
-  { path: "trainee-update",component: TraineeProfileUpdateComponent},
-  { path: "dialog-box",component:DialogBoxComponent},
-  { path:"trainer-update",component:TrainerProfileUpdateComponent},
-  {path:"update-password",component:PasswordUpdateComponent },
-  {path:"edit-trainee-trainer",component:TraineeTrainersComponent},
-  {path:"addTraining",component:AddTrainingComponent},
-  {path:"trainee-trainings",component:TraineeTrainingsLogsComponent},
-  {path:"trainer-trainings",component:TrainerTrainingsLogsComponent},
+  {path: "home", component: InformationComponent},
+  {path: "join-us", component: JoinUsComponent},
+  {path: "signIn", component: SignInComponent},
+  {path: "trainee-signup", component: TraineeRegistrationComponent},
+  {path: "trainer-signup", component: TrainerRegistrationComponent},
+  {path: "trainee-profile", component: TraineeProfileComponent},
+  {path: "trainer-profile", component: TrainerProfileComponent},
+  {path: "trainee-update", component: TraineeProfileUpdateComponent},
+  {path: "dialog-box", component: DialogBoxComponent},
+  {path: "trainer-update", component: TrainerProfileUpdateComponent},
+  {path: "update-password", component: PasswordUpdateComponent},
+  {path: "edit-trainee-trainer", component: TraineeTrainersComponent},
+  {path: "addTraining", component: AddTrainingComponent},
+  {path: "trainee-trainings", component: TraineeTrainingsLogsComponent},
+  {path: "trainer-trainings", component: TrainerTrainingsLogsComponent},
+  {path: "**",component:PageNotFoundComponent},
 
 ];
 
@@ -46,4 +47,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

@@ -1,4 +1,4 @@
-export class CredentialsDto{
-  username:string |undefined;
-  password:string | undefined;
+export class CredentialsDto {
+  username: string | undefined;
+  password: string | undefined;
 }
