@@ -1,0 +1,51 @@
+<app-homepage></app-homepage>
+<div class="container">
+  <div class="header">
+    <h1>Registration</h1>
+    <h3>Trainer</h3>
+  </div>
+  <div class="body">
+    <div class="image">
+      <img alt="Trainer Registration Image" src="../../../assets/images/trainer-sign-up.png">
+    </div>
+    <div class="registration-form">
+      <form (ngSubmit)="onSubmit()" [formGroup]="registrationForm">
+        <mat-form-field>
+          <mat-icon class="my-icon" matPrefix>perm_identity</mat-icon>
+          <mat-label>Enter Firstname</mat-label>
+          <input formControlName="firstName" id="firstname" matInput name="firstname">
+          <div *ngIf="firstName.touched && firstName.invalid">
+            <div *ngIf="firstName.errors?.required "> firstName is required...</div>
+          </div>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-icon class="my-icon" matPrefix>perm_identity</mat-icon>
+          <mat-label>Enter Lastname</mat-label>
+          <input formControlName="lastName" id="lastName" matInput name="lastName">
+          <div *ngIf="lastName.touched && lastName.invalid">
+            <div *ngIf="lastName.errors?.required "> lastName is required...</div>
+          </div>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-icon class="my-icon" matPrefix>fitness_center</mat-icon>
+          <mat-label>please select specialization</mat-label>
+          <mat-select formControlName="specialization" id="specialization" name="specialization">
+            <mat-option *ngFor="let specialization of specializations" [value]="specialization.value">
+              {{specialization.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-icon class="my-icon" matPrefix>email</mat-icon>
+          <mat-label>Enter Email</mat-label>
+          <input formControlName="email" id="email" matInput name="email">
+          <div *ngIf="email.touched && email.invalid">
+            <div *ngIf="email.errors?.required "> Email is required...</div>
+          </div>
+        </mat-form-field>
+        <button [disabled]="registrationForm.invalid"mat-raised-button type="submit">Submit</button>
+
+      </form>
+    </div>
+  </div>
+</div>
