@@ -115,15 +115,14 @@ export class TraineeTrainersComponent implements OnInit {
         }
       }
       let traineeTrainerList = new TraineeTrainersListUpdate(this.traineeProfile.userName, trainers);
-      this.traineeService.updateTrainersList(traineeTrainerList).subscribe(value => {
-        //console.log("Updated trainers List "+value);
-
-        this.snackbarService.openSnackBar(`Trainers List Updated successfully`);
-        this.router.navigate(['trainee-profile'], {state: {traineeProfile: this.traineeProfile}});
-
-
+      this.traineeService.updateTrainersList(traineeTrainerList).subscribe({
+        next:(data:any)=>{
+          this.snackbarService.openSnackBar(`Trainers List Updated successfully`);
+          this.router.navigate(['trainee-profile'], {state: {profile: this.traineeProfile}});
+        },error:(error:any)=>{
+          this.snackbarService.openSnackBar(error.error.error);
+        }
       })
-
     } else {
       console.log("Please select at least one element");
     }
@@ -131,6 +130,6 @@ export class TraineeTrainersComponent implements OnInit {
 
 
   backToProfile() {
-    this.router.navigate(['trainee-profile'], {state: {traineeProfile: this.traineeProfile}});
+    this.router.navigate(['trainee-profile'], {state: {profile: this.traineeProfile}});
   }
 }

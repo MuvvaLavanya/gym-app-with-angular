@@ -89,7 +89,6 @@ export class TrainerTrainingsLogsComponent {
     this.trainerService.getTrainerTrainings(this.trainerTrainingsList).subscribe(data => {
       console.log(data)
       if (data.error) {
-
       } else {
         this.trainingData = data;
         console.log(data)
@@ -98,6 +97,6 @@ export class TrainerTrainingsLogsComponent {
   }
 
   backToProfile() {
-    this.router.navigate(['trainer-profile'], {state: {trainerProfile: this.trainerProfile}});
+    this.router.navigate(['trainer-profile'], {state: {profile: this.trainerProfile}});
   }
 }

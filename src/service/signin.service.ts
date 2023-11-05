@@ -13,9 +13,9 @@ export class SigninService {
   private baseUrl = "http://localhost:8081/gym/user";
   constructor(private httpclient:HttpClient) {
   }
-  userAuthentication(credentials: CredentialsDto): Observable<boolean> {
+  userAuthentication(credentials: CredentialsDto): Observable<any> {
     const url = `${this.baseUrl}/authentication`;
-    return this.httpclient.post<boolean>(url, credentials);
+    return this.httpclient.post<any>(url, credentials);
   }
   updateCredentials(updatePassword:UpdatePassword): Observable<any> {
     const url = `${this.baseUrl}/updatePassword`;

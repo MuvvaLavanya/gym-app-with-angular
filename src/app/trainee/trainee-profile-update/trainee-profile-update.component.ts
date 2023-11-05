@@ -32,21 +32,19 @@ export class TraineeProfileUpdateComponent {
     this.traineeUpdateDto.email = this.traineeProfile.email;
     this.traineeUpdateDto.status = this.traineeProfile.status;
     console.log(this.traineeUpdateDto);
-    this.traineeService.updateTraineeProfile(this.traineeUpdateDto).subscribe(data => {
-      if (data) {
-        console.log(data);
+    this.traineeService.updateTraineeProfile(this.traineeUpdateDto).subscribe({
+      next:(data:any)=>{
         this.snackbarService.openSnackBar(`Trainee Profile Updated Successfully`);
-        this.router.navigate(['trainee-profile'], {state: {traineeProfile: this.traineeProfile}});
-      } else if (data.error) {
-        this.snackbarService.openSnackBar(`Enter Proper Trainee Details`);
+        this.router.navigate(['trainee-profile'], {state: {profile: this.traineeProfile}});
+      },error:(error:any)=>{
+        this.snackbarService.openSnackBar(error.error.error);
       }
-
     })
 
 
   }
 
   backToProfile() {
-    this.router.navigate(['trainee-profile'], {state: {traineeProfile: this.traineeProfile}});
+    this.router.navigate(['trainee-profile'], {state: {profile: this.traineeProfile}});
   }
 }

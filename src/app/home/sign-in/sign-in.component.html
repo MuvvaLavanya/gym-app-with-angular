@@ -15,24 +15,22 @@
             <mat-icon class="my-icon" matPrefix>perm_identity</mat-icon>
             <mat-label>Enter Username</mat-label>
             <input formControlName="username" matInput name="username" type="text">
-                    <div *ngIf="username.touched && username.invalid">
-                      <div *ngIf="username.errors?.required "> user name is required...</div>
-                    </div>
+            <mat-error *ngIf="loginForm.get('username').hasError('required')">
+              Username is <strong>required</strong>
+            </mat-error>
           </mat-form-field>
-
-
           <mat-form-field>
             <mat-icon class="my-icon" matPrefix>lock</mat-icon>
             <mat-label>Enter Password</mat-label>
             <input formControlName="password" matInput
                    name="password"
                    type="password">
-                    <div *ngIf="password.touched && password.invalid">
-                      <div *ngIf="password.errors?.required "> password is required...</div>
-                    </div>
+            <mat-error *ngIf="loginForm.get('password').hasError('required')">
+              Password is <strong>required</strong>
+            </mat-error>
           </mat-form-field>
 
-          <mat-radio-group [(ngModel)]="selectedUserType" [ngModelOptions]="{standalone: true}"
+          <mat-radio-group formControlName="userType"
                            aria-label="Type of User">
             <mat-radio-button value="trainee">Trainee</mat-radio-button>
             <mat-radio-button value="trainer">Trainer</mat-radio-button>

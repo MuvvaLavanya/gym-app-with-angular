@@ -17,7 +17,6 @@ export interface TrainerInfo {
   styleUrls: ['./trainer-profile.component.css']
 })
 export class TrainerProfileComponent {
-  displayedColumns: string[] = ['username', 'firstname', 'lastname'];
   dataSource: TrainerInfo[] = [];
   trainerProfile: TrainerProfileDto = new TrainerProfileDto();
 
@@ -26,7 +25,7 @@ export class TrainerProfileComponent {
 
   ngOnInit() {
     const state = window.history.state;
-    this.trainerProfile = state.trainerProfile;
+    this.trainerProfile = state.profile;
     console.log("we are inside my profile component " + this.trainerProfile);
     if (this.trainerProfile.traineesList) {
       for (const trainee of this.trainerProfile.traineesList) {

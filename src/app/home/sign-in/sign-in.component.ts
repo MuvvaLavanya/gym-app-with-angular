@@ -26,6 +26,7 @@ export class SignInComponent {
     this.loginForm = new FormGroup({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
+      userType:new FormControl('trainee')
     });
   }
 
@@ -41,39 +42,47 @@ export class SignInComponent {
   onSubmit() {
     this.credentials.username = this.loginForm.value.username;
     this.credentials.password = this.loginForm.value.password;
-    this.signInService.userAuthentication(this.credentials).subscribe(data => {
-      console.log(data);
-      if (data == true) {
-        console.log("user exist")
-        if (this.selectedUserType === 'trainee') {
-          this.traineeService.getTraineeProfile(this.credentials.username).subscribe(data => {
-            if (data.error) {
-              this.snackbarService.openSnackBar(`Trainee with username ${this.credentials.username} not found.`);
-            } else {
-              let traineeProfile: TraineeProfileDto = data
-              this.guardService.setUserRole(2);
-              this.router.navigate(['trainee-profile'], {state: {traineeProfile}});
+    this.signInService.userAuthentication(this.credentials).subscribe({
+      next: (data: any) => {
+        if(this.loginForm.value.userType=='trainer')
+        {
+          this.trainerService.getTrainerProfile(this.credentials.username).subscribe({
+            next:(data: any)=>{
+              let trainerProfile: TrainerProfileDto = data
+              this.handleSuccessfulAuthentication(trainerProfile, 1, 'trainer-profile');
+            },
+            error:(error:any)=>{
+              this.handleProfileNotFoundError("Trainer",this.credentials.username);
             }
           })
-        } else if (this.selectedUserType === 'trainer') {
-
-          this.trainerService.getTrainerProfile(this.credentials.username).subscribe(data => {
-            console.log(data);
-            if (data.error) {
-              this.snackbarService.openSnackBar(`Trainer with username ${this.credentials.username} not found.`);
-
-            } else {
-              let trainerProfile: TrainerProfileDto = data
-              this.guardService.setUserRole(1);
-              this.router.navigate(['trainer-profile'], {state: {trainerProfile}});
-
-            }
-          });
         }
-      } else {
+        else if(this.loginForm.value.userType=='trainee')
+        {
+          this.traineeService.getTraineeProfile(this.credentials.username).subscribe({
+            next:(data: any)=>{
+              let traineeProfile: TraineeProfileDto = data
+              console.log(traineeProfile);
+              this.handleSuccessfulAuthentication(traineeProfile, 2, 'trainee-profile');
+            },
+            error:(error:any)=>{
+              this.handleProfileNotFoundError("Trainee",this.credentials.username);
+            }
+          })
+        }
+      },
+      error: (error: any) => {
         this.snackbarService.openSnackBar(`Enter Valid Username and Password`);
       }
     });
 
+  }
+
+  handleProfileNotFoundError(userType: string, username: string |undefined): void {
+    this.snackbarService.openSnackBar(`${userType} with username ${username} not found.`);
+  }
+
+  handleSuccessfulAuthentication(profile: TrainerProfileDto|TraineeProfileDto, userRole: number, route: string): void {
+    this.guardService.setUserRole(userRole);
+    this.router.navigate([route], { state: { profile } });
   }
 }

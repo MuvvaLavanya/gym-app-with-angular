@@ -18,10 +18,9 @@ export class AddTrainingComponent {
 
   constructor(private trainingService: TrainingService, private router: Router, private snackbarService: SnackBarService) {
     this.trainingForm = new FormGroup({
-      trainerUsername: new FormControl('', Validators.required),
-      traineeUsername: new FormControl('', Validators.required),
+      traineeUsername: new FormControl(''),
       trainingName: new FormControl('', Validators.required),
-      trainingType: new FormControl('', Validators.required),
+      trainingType: new FormControl(''),
       date: new FormControl('', Validators.required),
       duration: new FormControl('', Validators.required),
     });
@@ -44,14 +43,13 @@ export class AddTrainingComponent {
     console.log(this.trainingDto);
     this.trainingService.saveTraining(this.trainingDto).subscribe(data => {
       this.snackbarService.openSnackBar(`Training added successfully`);
-      this.router.navigate(['trainer-profile'], {state: {trainerProfile: this.trainerProfile}});
-
+      this.router.navigate(['trainer-profile'], {state: {profile: this.trainerProfile}});
     })
 
 
   }
 
   backToProfile() {
-    this.router.navigate(['trainer-profile'], {state: {trainerProfile: this.trainerProfile}});
+    this.router.navigate(['trainer-profile'], {state: {profile: this.trainerProfile}});
   }
 }

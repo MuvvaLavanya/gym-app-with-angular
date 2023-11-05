@@ -20,11 +20,6 @@ import {SignInComponent} from "./home/sign-in/sign-in.component";
 import {TraineeProfileComponent} from "./trainee/trainee-profile/trainee-profile.component";
 
 const routes: Routes = [
-  {
-    path: "",
-    redirectTo: "/home",
-    pathMatch: "full"
-  },
   {path: "home", component: InformationComponent},
   {path: "join-us", component: JoinUsComponent},
   {path: "signIn", component: SignInComponent},
@@ -40,6 +35,11 @@ const routes: Routes = [
   {path: "addTraining", component: AddTrainingComponent},
   {path: "trainee-trainings", component: TraineeTrainingsLogsComponent},
   {path: "trainer-trainings", component: TrainerTrainingsLogsComponent},
+  {
+    path: "",
+    redirectTo: "/home",
+    pathMatch: "full"
+  },
   {path: "**",component:PageNotFoundComponent},
 
 ];

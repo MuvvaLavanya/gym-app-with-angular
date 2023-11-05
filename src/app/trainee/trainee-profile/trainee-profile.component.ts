@@ -6,8 +6,6 @@ import {Router} from "@angular/router";
 export interface TrainerInfo {
   name: string;
   specialization: string;
-
-
 }
 
 
@@ -26,8 +24,7 @@ export class TraineeProfileComponent {
 
   ngOnInit() {
     const state = window.history.state;
-    this.traineeProfile = state.traineeProfile;
-    console.log(this.traineeProfile);
+    this.traineeProfile = state.profile;
     if (this.traineeProfile.trainersList) {
       for (const trainer of this.traineeProfile.trainersList) {
         if (trainer.firstName && trainer.specialization) {

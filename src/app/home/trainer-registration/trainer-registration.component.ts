@@ -30,10 +30,14 @@ export class TrainerRegistrationComponent {
 
   constructor(private trainerService: TrainerService, private router: Router, public dialog: MatDialog,private snackbarService:SnackBarService) {
     this.registrationForm = new FormGroup({
-      firstName: new FormControl('', Validators.required),
-      lastName: new FormControl('', Validators.required),
+      firstName: new FormControl('', [Validators.required,Validators.minLength(3),
+        Validators.maxLength(15),
+        Validators.pattern(/^[a-zA-Z]*$/)]),
+      lastName: new FormControl('', [Validators.required,Validators.minLength(3),
+        Validators.maxLength(15),
+        Validators.pattern(/^[a-zA-Z]*$/)]),
       specialization: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z]+@gmail\.com$/i)])
+      email: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]+@gmail\.com$/i)])
     });
   }
   get firstName() {
@@ -52,15 +56,13 @@ export class TrainerRegistrationComponent {
     this.trainer.specialization = this.registrationForm.value.specialization;
     console.log(this.registrationForm.value.trainingType);
     this.trainer.email = this.registrationForm.value.email;
-    this.trainerService.saveTrainer(this.trainer).subscribe(data => {
-      console.log(data);
-      if(data.username) {
-        this.dialog.open(DialogBoxComponent, {
+    this.trainerService.saveTrainer(this.trainer).subscribe({
+      next:(data:any)=>{
+        this.dialog.open(DialogBoxComponent,{
           data: {username: data.username, password: data.password}
         });
-      }
-      else{
-        this.snackbarService.openSnackBar(data.error);
+      },error:(error:any)=>{
+        this.snackbarService.openSnackBar(error.error.error);
       }
     })
   }

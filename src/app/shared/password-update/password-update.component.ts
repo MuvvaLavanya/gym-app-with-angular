@@ -49,28 +49,22 @@ export class PasswordUpdateComponent {
   ngOnInit() {
     const state = window.history.state;
     this.userNameFromState = state.userName;
-    console.log(state.username);
     this.changePasswordForm.get('username')?.setValue(this.userNameFromState);
-    console.log("specialization " + this.username)
   }
 
   onSubmit() {
-    console.log(this.changePasswordForm.value);
-    console.log(this.changePasswordForm.value.username);
-    console.log(this.changePasswordForm.value.password);
-
-
     let updatePassword: UpdatePassword = new UpdatePassword();
     updatePassword.userName = this.userNameFromState;
     updatePassword.oldPassword = this.changePasswordForm.value.oldPassword;
     updatePassword.newPassword = this.changePasswordForm.value.newPassword;
-    this.signinService.updateCredentials(updatePassword).subscribe(data => {
-      console.log(data);
+    this.signinService.updateCredentials(updatePassword).subscribe({
+      next:(data:any)=>{
         this.snackBar.openSnackBar("Password updated succesfully, Please log-in again", 1500);
         this.router.navigate(['signIn']);
-
-
-    });
+      },error:(error:any)=>{
+        this.snackBar.openSnackBar("Please check your password,Try again", 1500);
+      }
+    })
 
 
   }
